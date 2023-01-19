@@ -125,9 +125,10 @@ $school_id      = (isset($_GET['school_id']) ? $_GET['school_id'] : '');
 $class_id       = (isset($_GET['class_id']) ? $_GET['class_id'] : '');
 $professor_id   = (isset($_GET['professor_id']) ? $_GET['professor_id'] : '');
 $isbn           = (isset($_GET['isbn']) ? $_GET['isbn'] : '');
+$year           = (isset($_GET['year']) ? $_GET['year'] : '');
 
 
-$filters = "school_id=" . $school_id . "&class_id=" . $class_id . "&professor_id=" . $professor_id . "&isbn=" . $isbn . "&";
+$filters = "school_id=" . $school_id . "&class_id=" . $class_id . "&professor_id=" . $professor_id . "&isbn=" . $isbn . "&year=" . $year . "&";
 
 ?>
 <div class="container-fluid jumbotron" style="min-height:99px;padding: 2rem 1rem;">
@@ -193,18 +194,21 @@ $filters = "school_id=" . $school_id . "&class_id=" . $class_id . "&professor_id
                     </div>
                     <div class="col-md-2 col-sm-12">
 
-                        <select name="isbn" class="custom-select trigger_change_event get_textbooks_select2 ">
+                        <select name="year" class="custom-select trigger_change_event get_years_select2 ">
                             <option value="0">Select Year</option>
-                            <?php if (isset($this->_data['textbook_data'])) {
-                                foreach ($this->_data['textbook_data']  as $key => $value) {
-                                    if (isset($value['isbn'])) { ?>
-                                        <option <?php echo ($_GET['isbn'] ?? '') == $value['isbn'] ? 'selected' : ''; ?> value="<?php echo $value['isbn']; ?>"><?php echo $value['isbn']; ?></option>
+                            <?php if (isset($this->_data['year'])) {
+                                foreach ($this->_data['year']  as $key => $value) {
+                                    if (isset($value['year'])) { ?>
+                                        <option <?php echo ($_GET['year'] ?? '') == $value['year'] ? 'selected' : ''; ?> value="<?php echo $value['year']; ?>"><?php echo $value['year']; ?></option>
                             <?php }
                                 }
                             } ?>
                         </select>
 
                     </div>
+                </div>
+                <div class="row">
+
                     <div class="col-md-2 col-sm-2">
                         <a href=" <?php echo base_url(); ?>buy" id="reset">Reset Filters</a>
                     </div>

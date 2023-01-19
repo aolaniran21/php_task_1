@@ -87,6 +87,24 @@ document.addEventListener('DOMContentLoaded', function()
             } 
         }
     }); 
+    $(".get_years_select2").select2({
+        minimumInputLength: 1, 
+        ajax: {
+            url: ajaxURLPath + 'v1/api/years',
+            dataType: 'json',
+            type: "GET",
+            quietMillis: 50,
+            minimumResultsForSearch: 50,
+            data: function (term) 
+            {
+                return term;
+            },
+            results:  function (data) 
+            {  
+                return  { results: data  }; 
+            } 
+        }
+    }); 
 
 
 }, false)  

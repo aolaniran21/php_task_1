@@ -88,9 +88,7 @@ class Inventory_model extends Manaknight_Model
     ['approve', 'Approve', ''],
     ['status', 'Status', '']
   ];
-  protected $_validation_messages = [
-
-  ];
+  protected $_validation_messages = [];
 
   public function __construct()
   {
@@ -167,96 +165,86 @@ class Inventory_model extends Manaknight_Model
   }
 
   // frontend functions
-    public function get_all_active_items_list_fe($search_term = '', $school_id = '', $professor_id = '', $textbook_id = '', $class_id = '',$isbn='',$order_by='',$direction='', $offset = '', $limit = '')
-    {
-        $this->db->from('inventory');
-        $this->db->join('school', 'inventory.school_id = school.id', 'LEFT');
-        $this->db->join('professor', 'inventory.professor_id = professor.id', 'LEFT');
-        $this->db->join('textbook', 'inventory.textbook_id = textbook.id', 'LEFT');
-        $this->db->join('classes', 'inventory.class_id = classes.id', 'LEFT');
-        $this->db->join('user', 'inventory.user_id = user.id', 'LEFT');
-        $this->db->join('review', 'inventory.id = review.inventory_id', 'LEFT');
+  public function get_all_active_items_list_fe($search_term = '', $school_id = '', $professor_id = '', $textbook_id = '', $class_id = '', $isbn = '', $year = '', $order_by = '', $direction = '', $offset = '', $limit = '')
+  {
+    $this->db->from('inventory');
+    $this->db->join('school', 'inventory.school_id = school.id', 'LEFT');
+    $this->db->join('professor', 'inventory.professor_id = professor.id', 'LEFT');
+    $this->db->join('textbook', 'inventory.textbook_id = textbook.id', 'LEFT');
+    $this->db->join('classes', 'inventory.class_id = classes.id', 'LEFT');
+    $this->db->join('user', 'inventory.user_id = user.id', 'LEFT');
+    $this->db->join('review', 'inventory.id = review.inventory_id', 'LEFT');
 
-        $this->db->select('inventory.*,sum(review.rating) as rating,count(review.id) as rating_count,user.first_name ,school.name AS school_name,classes.name AS class_name,textbook.name AS textbook_name,textbook.isbn AS textbook_isbn,professor.name AS professor_name');
-        $this->db->where('inventory.status', 1);
-        $this->db->where('school.status', 1);
-        $this->db->group_by('inventory.id');
-   
+    $this->db->select('inventory.*,sum(review.rating) as rating,count(review.id) as rating_count,user.first_name ,school.name AS school_name,classes.name AS class_name,textbook.name AS textbook_name,textbook.isbn AS textbook_isbn,professor.name AS professor_name');
+    $this->db->where('inventory.status', 1);
+    $this->db->where('school.status', 1);
+    $this->db->group_by('inventory.id');
 
-        if($order_by && $direction)
-        {
-            if(in_array($order_by,['school_id','isbn','class_id','professor_id','textbook_id','year','word_count','note_type']))
-            {
-                $this->db->order_by($order_by, $direction);
-            }else if($order_by=='seller'){
-                $this->db->order_by('user.first_name', $direction);
-            }else if($order_by=='review'){
-                $this->db->order_by('rating', $direction);
-            }
 
-        }
-        else
-        {
-            $this->db->order_by('inventory.created_at', 'DESC');
-        }
-
-        if ($search_term)
-        {
-            $query = $this->db->where(' (inventory.title like  "%'.$search_term.'%"  or 
-            classes.name like  "%'.$search_term.'%" or
-            school.name like  "%'.$search_term.'%" or 
-            textbook.name like  "%'.$search_term.'%" or 
-            professor.name like  "%'.$search_term.'%" )');
-
-        }
-
-        if ($school_id)
-        {
-            $query = $this->db->where('inventory.school_id', $school_id);
-        }
-
-        if ($professor_id)
-        {
-            $query = $this->db->where('inventory.professor_id', $professor_id);
-        }
-
-        if ($textbook_id)
-        {
-            $query = $this->db->where('inventory.textbook_id', $textbook_id);
-        }
-        if ($isbn)
-        {
-            $query = $this->db->where('inventory.isbn', $isbn);
-        }
-
-        if ($class_id)
-        {
-            $query = $this->db->where('inventory.class_id', $class_id);
-        }
-
-        if ($limit)
-        {
-            $this->db->limit($limit, $offset);
-        }
-
-        $query = $this->db->get();
-      
-        if ($query->num_rows() > 0)
-        {
-            return $query->result();
-        }
-        return FALSE;
+    if ($order_by && $direction) {
+      if (in_array($order_by, ['school_id', 'isbn', 'class_id', 'professor_id', 'textbook_id', 'year', 'word_count', 'note_type'])) {
+        $this->db->order_by($order_by, $direction);
+      } else if ($order_by == 'seller') {
+        $this->db->order_by('user.first_name', $direction);
+      } else if ($order_by == 'review') {
+        $this->db->order_by('rating', $direction);
+      }
+    } else {
+      $this->db->order_by('inventory.created_at', 'DESC');
     }
 
+    if ($search_term) {
+      $query = $this->db->where(' (inventory.title like  "%' . $search_term . '%"  or 
+            classes.name like  "%' . $search_term . '%" or
+            school.name like  "%' . $search_term . '%" or 
+            textbook.name like  "%' . $search_term . '%" or 
+            professor.name like  "%' . $search_term . '%" or
+            inventory.year like "%' . $search_term . '%")');
+    }
 
+    if ($school_id) {
+      $query = $this->db->where('inventory.school_id', $school_id);
+    }
 
-  public function get_current_user_order_count($user_id){
-    return  $this->db->select('count(id) as order_count,inventory_id')->from('order')->where('status',1)->where('sale_user_id',$user_id)->group_by('inventory_id')->get()->result_array();
-    
+    if ($professor_id) {
+      $query = $this->db->where('inventory.professor_id', $professor_id);
+    }
+
+    if ($textbook_id) {
+      $query = $this->db->where('inventory.textbook_id', $textbook_id);
+    }
+    if ($isbn) {
+      $query = $this->db->where('inventory.isbn', $isbn);
+    }
+    if ($year) {
+      $query = $this->db->where('inventory.year', $year);
+    }
+
+    if ($class_id) {
+      $query = $this->db->where('inventory.class_id', $class_id);
+    }
+
+    if ($limit) {
+      $this->db->limit($limit, $offset);
+    }
+
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+      return $query->result();
+    }
+    return FALSE;
   }
-  public function get_current_user_refunded_count($user_id){
-    return  $this->db->select('count(id) as order_count,inventory_id')->from('order')->where('status',2)->where('sale_user_id',$user_id)->group_by('inventory_id')->get()->result_array();
-    
+
+
+
+  public function get_current_user_order_count($user_id)
+  {
+    return  $this->db->select('count(id) as order_count,inventory_id')->from('order')->where('status', 1)->where('sale_user_id', $user_id)->group_by('inventory_id')->get()->result_array();
+  }
+  public function get_current_user_refunded_count($user_id)
+  {
+    return  $this->db->select('count(id) as order_count,inventory_id')->from('order')->where('status', 2)->where('sale_user_id', $user_id)->group_by('inventory_id')->get()->result_array();
   }
   public function get_all_active_items_by_school_list_fe($school_id, $offset = '', $limit = '')
   {
@@ -273,15 +261,13 @@ class Inventory_model extends Manaknight_Model
     $this->db->order_by('school.created_at', 'DESC');
     $this->db->order_by('inventory.created_at', 'DESC');
 
-    if ($limit != '')
-    {
+    if ($limit != '') {
       $this->db->limit($limit, $offset);
     }
 
     $query = $this->db->get();
 
-    if ($query->num_rows() > 0)
-    {
+    if ($query->num_rows() > 0) {
       return $query->result();
     }
     return FALSE;
@@ -301,8 +287,7 @@ class Inventory_model extends Manaknight_Model
     $data = $this->db->get()->row();
     // die($this->db->last_query());
 
-    if ($data)
-    {
+    if ($data) {
       return $data;
     }
     return FALSE;
@@ -310,128 +295,109 @@ class Inventory_model extends Manaknight_Model
 
 
 
-    /**
-     * Count number of model
-     *
-     * @access public
-     * @param mixed $parameters
-     * @return integer $result
-     */
-    public function count($parameters)
-    {
-        $this->db->select('user.first_name, user.last_name, credential.email, inventory.* ');
-        if (!empty($parameters))
-        {
-            foreach ($parameters as $key => $value)
-            {
-                if (is_numeric($key) && strlen($value) > 0)
-                {
-                    $this->db->where($value);
-                    continue;
-                }
-
-                if ($key === NULL && $value === NULL)
-                {
-                    continue;
-                }
-
-                if (!is_null($value))
-                {
-                    if(is_numeric($value))
-                    {
-                        $this->db->where($key, $value);
-                        continue;
-                    }
-
-                    if(is_string($value))
-                    {
-                        $this->db->like($key, $value);
-                        continue;
-                    }
-
-                    $this->db->where($key, $value);
-                }
-            }
+  /**
+   * Count number of model
+   *
+   * @access public
+   * @param mixed $parameters
+   * @return integer $result
+   */
+  public function count($parameters)
+  {
+    $this->db->select('user.first_name, user.last_name, credential.email, inventory.* ');
+    if (!empty($parameters)) {
+      foreach ($parameters as $key => $value) {
+        if (is_numeric($key) && strlen($value) > 0) {
+          $this->db->where($value);
+          continue;
         }
 
-        $this->db->join('user', 'inventory.user_id = user.id', 'LEFT');
-        $this->db->join('credential', 'user.id = credential.user_id', 'LEFT');
+        if ($key === NULL && $value === NULL) {
+          continue;
+        }
 
+        if (!is_null($value)) {
+          if (is_numeric($value)) {
+            $this->db->where($key, $value);
+            continue;
+          }
 
-        $this->_custom_counting_conditions($this->db);
-        $this->db->from($this->_table);
-        return $this->db->count_all_results();
+          if (is_string($value)) {
+            $this->db->like($key, $value);
+            continue;
+          }
+
+          $this->db->where($key, $value);
+        }
+      }
     }
 
-    /**
-     * Get paginated model
-     *
-     * @access public
-     * @param integer $page default 0
-     * @param integer $limit default 10
-     * @return array
-     */
-    public function get_paginated($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC')
-    {
-        $this->db->limit($limit, $page);
+    $this->db->join('user', 'inventory.user_id = user.id', 'LEFT');
+    $this->db->join('credential', 'user.id = credential.user_id', 'LEFT');
 
-        if ($order_by === '')
-        {
-            $order_by = $this->_primary_key;
-        }
-        $this->db->select('user.first_name, user.last_name, credential.email, inventory.* ');
-        $this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction));
 
-        if (!empty($where))
-        {
-            foreach($where as $field => $value)
-            {
-                if (is_numeric($field) && strlen($value) > 0)
-                {
-                    $this->db->where($value);
-                    continue;
-                }
+    $this->_custom_counting_conditions($this->db);
+    $this->db->from($this->_table);
+    return $this->db->count_all_results();
+  }
 
-                if ($field === NULL && $value === NULL)
-                {
-                    continue;
-                }
+  /**
+   * Get paginated model
+   *
+   * @access public
+   * @param integer $page default 0
+   * @param integer $limit default 10
+   * @return array
+   */
+  public function get_paginated($page = 0, $limit = 10, $where = [], $order_by = '', $direction = 'ASC')
+  {
+    $this->db->limit($limit, $page);
 
-                if ($value !== NULL)
-                {
-                    if(is_numeric($value))
-                    {
-                        $this->db->where($field, $value);
-                        continue;
-                    }
+    if ($order_by === '') {
+      $order_by = $this->_primary_key;
+    }
+    $this->db->select('user.first_name, user.last_name, credential.email, inventory.* ');
+    $this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction));
 
-                    if(is_string($value))
-                    {
-                        $this->db->like($field, $value);
-                        continue;
-                    }
-
-                    $this->db->where($field, $value);
-                }
-            }
-        }
-        
-        $this->db->join('user', 'inventory.user_id = user.id', 'LEFT');
-        $this->db->join('credential', 'user.id = credential.user_id', 'LEFT');
-
-        $query = $this->db->get($this->_table);
-        $result = [];
-
-        if ($query->num_rows() > 0)
-        {
-            foreach ($query->result() as $row)
-            {
-                $result[] = $row;
-            }
+    if (!empty($where)) {
+      foreach ($where as $field => $value) {
+        if (is_numeric($field) && strlen($value) > 0) {
+          $this->db->where($value);
+          continue;
         }
 
-        return $result;
+        if ($field === NULL && $value === NULL) {
+          continue;
+        }
+
+        if ($value !== NULL) {
+          if (is_numeric($value)) {
+            $this->db->where($field, $value);
+            continue;
+          }
+
+          if (is_string($value)) {
+            $this->db->like($field, $value);
+            continue;
+          }
+
+          $this->db->where($field, $value);
+        }
+      }
     }
 
+    $this->db->join('user', 'inventory.user_id = user.id', 'LEFT');
+    $this->db->join('credential', 'user.id = credential.user_id', 'LEFT');
 
+    $query = $this->db->get($this->_table);
+    $result = [];
+
+    if ($query->num_rows() > 0) {
+      foreach ($query->result() as $row) {
+        $result[] = $row;
+      }
+    }
+
+    return $result;
+  }
 }

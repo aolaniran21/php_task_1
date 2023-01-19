@@ -16755,6 +16755,7 @@ CREATE TABLE `review` (
   `inventory_id` int(11) NOT NULL,
   `order_id` int(11) DEFAULT NULL,
   `comment` text NOT NULL,
+  `private_review` text NOT NULL,
   `rating` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `created_at` date NOT NULL,
@@ -16762,9 +16763,9 @@ CREATE TABLE `review` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `review` (`id`, `user_id`, `inventory_id`, `order_id`, `comment`, `rating`, `status`, `created_at`, `updated_at`) VALUES
-(7,	30,	42,	34,	'test',	7,	0,	'2021-09-14',	'0000-00-00 00:00:00'),
-(8,	43,	48,	37,	'great book',	9,	1,	'2021-09-23',	'0000-00-00 00:00:00');
+INSERT INTO `review` (`id`, `user_id`, `inventory_id`, `order_id`, `comment`,`private_review`, `rating`, `status`, `created_at`, `updated_at`) VALUES
+(7,	30,	42,	34,	'test',	'neat',7,	0,	'2021-09-14',	'0000-00-00 00:00:00'),
+(8,	43,	48,	37,	'great book','wow',	9,	1,	'2021-09-23',	'0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
