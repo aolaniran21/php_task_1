@@ -207,11 +207,10 @@ $filters = "school_id=" . $school_id . "&class_id=" . $class_id . "&professor_id
 
                     </div>
                 </div>
-                <div class="row">
-
-                    <div class="col-md-2 col-sm-2">
-                        <a href=" <?php echo base_url(); ?>buy" id="reset">Reset Filters</a>
-                    </div>
+                <div class="row mt-2">
+                    <!-- <div class="col-md-2 col-sm-2"> -->
+                    <a href=" <?php echo base_url(); ?>buy" id="reset">Reset Filters</a>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>

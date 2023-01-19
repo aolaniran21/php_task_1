@@ -258,6 +258,9 @@ class Home_controller extends Manaknight_controller
     if ($this->input->get('isbn', TRUE)) {
       $this->_data['textbook_data']  = $this->db->select('distinct(isbn)')->from('inventory')->where('isbn', $this->input->get('isbn', TRUE))->get()->result_array();
     }
+    if ($this->input->get('year', TRUE)) {
+      $this->_data['year']  = $this->db->select('year')->from('inventory')->where('year', $this->input->get('year', TRUE))->get()->result_array();
+    }
 
 
 
@@ -268,6 +271,7 @@ class Home_controller extends Manaknight_controller
     $professor_id   = $this->input->get('professor_id', TRUE);
     $textbook_id    = $this->input->get('textbook_id', TRUE);
     $isbn           = $this->input->get('isbn', TRUE);
+    $year           = $this->input->get('year', TRUE);
     $class_id       = $this->input->get('class_id', TRUE);
     $order_by       = $this->input->get('order_by', TRUE);
     $direction      = $this->input->get('direction', TRUE);
@@ -278,7 +282,7 @@ class Home_controller extends Manaknight_controller
     // for pagination
     $this->load->library('pagination');
 
-    $rows_data = $this->inventory_model->get_all_active_items_list_fe($search_term, $school_id, $professor_id, $textbook_id, $class_id, $isbn, $order_by, $direction);
+    $rows_data = $this->inventory_model->get_all_active_items_list_fe($search_term, $school_id, $professor_id, $textbook_id, $class_id, $isbn, $year, $order_by, $direction);
 
     $total_rows = 0;
     if (!empty($rows_data)) {
@@ -321,7 +325,7 @@ class Home_controller extends Manaknight_controller
       'num_tag_close'      => '</li>'
     ]);
 
-    $items = $this->inventory_model->get_all_active_items_list_fe($search_term, $school_id, $professor_id, $textbook_id, $class_id, $isbn, $order_by, $direction, $offset, $limit);
+    $items = $this->inventory_model->get_all_active_items_list_fe($search_term, $school_id, $professor_id, $textbook_id, $class_id, $isbn, $year, $order_by, $direction, $offset, $limit);
 
     if (!empty($items)) {
       $this->_data['links'] = $this->pagination->create_links();
