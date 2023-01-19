@@ -17040,8 +17040,8 @@ INSERT INTO `setting` (`id`, `key`, `type`, `value`, `created_at`, `updated_at`)
 (2,	'version',	0,	'1.0.0',	'2021-08-09',	'2021-08-09 19:53:25'),
 (3,	'copyright',	0,	'Copyright © 2021 Manaknightdigital Inc. All rights reserved.',	'2021-08-09',	'2021-08-09 19:53:25'),
 (4,	'license_key',	4,	'',	'2021-08-09',	'2021-08-09 19:53:25'),
-(5,	'fixed_paper_amount',	0,	'50',	'2021-08-18',	'0000-00-00 00:00:00'),
-(6,	'payout_percentage_seller',	0,	'20',	'2021-08-18',	'0000-00-00 00:00:00');
+(5,	'fixed_paper_amount',	0,	'50',	'2021-08-18',	'2021-08-09 19:53:25'),
+(6,	'payout_percentage_seller',	0,	'20',	'2021-08-18',	'2021-08-09 19:53:25');
 
 DROP TABLE IF EXISTS `sms`;
 CREATE TABLE `sms` (
