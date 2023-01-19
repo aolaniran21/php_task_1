@@ -198,9 +198,9 @@ $filters = "school_id=" . $school_id . "&class_id=" . $class_id . "&professor_id
                             <option value="0">Select Year</option>
                             <?php if (isset($this->_data['year'])) {
                                 foreach ($this->_data['year']  as $key => $value) {
-                                    if (isset($value['year'])) { ?>
-                                        <option <?php echo ($_GET['year'] ?? '') == $value['year'] ? 'selected' : ''; ?> value="<?php echo $value['year']; ?>"><?php echo $value['year']; ?></option>
-                            <?php }
+                            ?>
+                                    <option <?php echo ($_GET['year'] ?? '') == $value['year'] ? 'selected' : ''; ?> value="<?php echo $value['year']; ?>"><?php echo $value['year']; ?></option>
+                            <?php
                                 }
                             } ?>
                         </select>
