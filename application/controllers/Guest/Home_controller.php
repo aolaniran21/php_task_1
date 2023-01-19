@@ -260,7 +260,7 @@ class Home_controller extends Manaknight_controller
     }
 
     if ($this->input->get('year', TRUE)) {
-      $this->_data['year']  = $this->db->select('year')->from('inventory')->where('year', $this->input->get('year', TRUE))->get()->result_array();
+      $this->_data['year']  = $this->db->select('distinct(year)')->from('inventory')->where('year', $this->input->get('year', TRUE))->get()->result_array();
     }
 
 

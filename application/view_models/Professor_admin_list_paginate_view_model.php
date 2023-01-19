@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2021*/
 /**
  * Professor List Paginate View Model
@@ -18,8 +18,8 @@ class Professor_admin_list_paginate_view_model
     protected $_per_page = 10;
     protected $_page;
     protected $_num_links = 5;
-    protected $_column = ['Action','ID','Name','Status'];
-    protected $_field_column = ['','id','status'];
+    protected $_column = ['Action', 'ID', 'Name', 'Status'];
+    protected $_field_column = ['', 'id', 'name', 'status'];
     protected $_list = [];
     protected $_links = '';
     protected $_sort_base_url = '';
@@ -31,7 +31,7 @@ class Professor_admin_list_paginate_view_model
     {
         $this->_entity = $entity;
         $this->_library = $library;
-		$this->_base_url = str_replace('/0', '/', $base_url);
+        $this->_base_url = str_replace('/0', '/', $base_url);
     }
 
     /**
@@ -40,7 +40,7 @@ class Professor_admin_list_paginate_view_model
      * @param integer $total_rows
      * @return void
      */
-    public function set_total_rows ($total_rows)
+    public function set_total_rows($total_rows)
     {
         $this->_total_rows = $total_rows;
     }
@@ -51,7 +51,7 @@ class Professor_admin_list_paginate_view_model
      * @param integer $per_page
      * @return void
      */
-    public function set_per_page ($per_page)
+    public function set_per_page($per_page)
     {
         $this->_per_page = $per_page;
     }
@@ -61,7 +61,7 @@ class Professor_admin_list_paginate_view_model
      * @param integer $_format_layout
      * @return void
      */
-    public function set_format_layout ($_format_layout)
+    public function set_format_layout($_format_layout)
     {
         $this->_format_layout = $_format_layout;
     }
@@ -72,7 +72,7 @@ class Professor_admin_list_paginate_view_model
      * @param string $order_by
      * @return void
      */
-    public function set_order_by ($order_by)
+    public function set_order_by($order_by)
     {
         $this->_order_by = $order_by;
     }
@@ -83,7 +83,7 @@ class Professor_admin_list_paginate_view_model
      * @param string $sort
      * @return void
      */
-    public function set_sort ($sort)
+    public function set_sort($sort)
     {
         $this->_sort = $sort;
     }
@@ -94,7 +94,7 @@ class Professor_admin_list_paginate_view_model
      * @param string $sort_base_url
      * @return void
      */
-    public function set_sort_base_url ($sort_base_url)
+    public function set_sort_base_url($sort_base_url)
     {
         $this->_sort_base_url = $sort_base_url;
     }
@@ -105,7 +105,7 @@ class Professor_admin_list_paginate_view_model
      * @param integer $page
      * @return void
      */
-    public function set_page ($page)
+    public function set_page($page)
     {
         $this->_page = $page;
     }
@@ -116,7 +116,7 @@ class Professor_admin_list_paginate_view_model
      * @param mixed $list
      * @return void
      */
-    public function set_list ($list)
+    public function set_list($list)
     {
         $this->_list = $list;
     }
@@ -126,7 +126,7 @@ class Professor_admin_list_paginate_view_model
      *
      * @return integer
      */
-    public function get_total_rows ()
+    public function get_total_rows()
     {
         return $this->_total_rows;
     }
@@ -136,7 +136,7 @@ class Professor_admin_list_paginate_view_model
      *
      * @return integer
      */
-    public function get_format_layout ()
+    public function get_format_layout()
     {
         return $this->_format_layout;
     }
@@ -146,7 +146,7 @@ class Professor_admin_list_paginate_view_model
      *
      * @return integer
      */
-    public function get_per_page ()
+    public function get_per_page()
     {
         return $this->_per_page;
     }
@@ -156,7 +156,7 @@ class Professor_admin_list_paginate_view_model
      *
      * @return integer
      */
-    public function get_page ()
+    public function get_page()
     {
         return $this->_page;
     }
@@ -166,7 +166,7 @@ class Professor_admin_list_paginate_view_model
      *
      * @return integer
      */
-    public function get_num_links ()
+    public function get_num_links()
     {
         return $this->_num_links;
     }
@@ -175,7 +175,7 @@ class Professor_admin_list_paginate_view_model
      * set_order_by function
      *
      */
-    public function get_order_by ()
+    public function get_order_by()
     {
         return $this->_order_by;
     }
@@ -184,7 +184,7 @@ class Professor_admin_list_paginate_view_model
      * get_field_column function
      *
      */
-    public function get_field_column ()
+    public function get_field_column()
     {
         return $this->_field_column;
     }
@@ -193,7 +193,7 @@ class Professor_admin_list_paginate_view_model
      * set_sort function
      *
      */
-    public function get_sort ()
+    public function get_sort()
     {
         return $this->_sort;
     }
@@ -202,7 +202,7 @@ class Professor_admin_list_paginate_view_model
      * set_sort_base_url function
      *
      */
-    public function get_sort_base_url ()
+    public function get_sort_base_url()
     {
         return $this->_sort_base_url;
     }
@@ -212,18 +212,17 @@ class Professor_admin_list_paginate_view_model
      *
      * @return integer
      */
-    public function get_num_page ()
+    public function get_num_page()
     {
         $num = ceil($this->_total_rows / $this->_per_page);
         return ($num > 0) ? (int) $num : 1;
     }
 
-    public function image_or_file ($file)
+    public function image_or_file($file)
     {
-        $images = ['.jpg','.png', '.gif', '.jpeg', '.bmp'];
+        $images = ['.jpg', '.png', '.gif', '.jpeg', '.bmp'];
         $is_image = FALSE;
-        if ($this->strposa($file, $images))
-        {
+        if ($this->strposa($file, $images)) {
             return "<div class='mkd-image-container'><img class='img-fluid' src='{$file}' onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/></div>";
         }
 
@@ -239,10 +238,8 @@ class Professor_admin_list_paginate_view_model
      */
     private function strposa($haystack, $needle)
     {
-        foreach($needle as $query)
-        {
-            if(strpos($haystack, $query) !== FALSE)
-            {
+        foreach ($needle as $query) {
+            if (strpos($haystack, $query) !== FALSE) {
                 return TRUE;
             }
         }
@@ -254,7 +251,7 @@ class Professor_admin_list_paginate_view_model
      *
      * @return mixed
      */
-    public function get_list ()
+    public function get_list()
     {
         $this->_library->initialize([
             'reuse_query_string' => TRUE,
@@ -290,7 +287,7 @@ class Professor_admin_list_paginate_view_model
      *
      * @return mixed
      */
-    public function get_links ()
+    public function get_links()
     {
         $this->_links = $this->_library->create_links();
         return $this->_links;
@@ -302,7 +299,7 @@ class Professor_admin_list_paginate_view_model
      * @param string $heading
      * @return void
      */
-    public function set_heading ($heading)
+    public function set_heading($heading)
     {
         $this->_heading = $heading;
     }
@@ -312,17 +309,17 @@ class Professor_admin_list_paginate_view_model
      *
      * @return string
      */
-    public function get_heading ()
+    public function get_heading()
     {
         return $this->_heading;
     }
 
-    public function set_column ($column)
+    public function set_column($column)
     {
         $this->_column = $column;
     }
 
-    public function get_column ()
+    public function get_column()
     {
         return $this->_column;
     }
@@ -335,27 +332,23 @@ class Professor_admin_list_paginate_view_model
         $length = array('60', '60', '24', '30', '12', '10');
 
         $currentTime = time();
-        if($currentTime >= $timestamp)
-        {
-             $diff  = time() - $timestamp;
+        if ($currentTime >= $timestamp) {
+            $diff  = time() - $timestamp;
 
-             for($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++)
-             {
+            for ($i = 0; $diff >= $length[$i] && $i < count($length) - 1; $i++) {
                 $diff = $diff / $length[$i];
-             }
+            }
 
-             $diff = round($diff);
-             return $diff . ' ' . $strTime[$i] . '(s) ago ';
+            $diff = round($diff);
+            return $diff . ' ' . $strTime[$i] . '(s) ago ';
         }
     }
 
-    public function time_default_mapping ()
+    public function time_default_mapping()
     {
         $results = [];
-        for ($i=0; $i < 24; $i++)
-        {
-            for ($j=0; $j < 60; $j++)
-            {
+        for ($i = 0; $i < 24; $i++) {
+            for ($j = 0; $j < 60; $j++) {
                 $hour = ($i < 10) ? '0' . $i : $i;
                 $min = ($j < 10) ? '0' . $j : $j;
                 $results[($i * 60) + $j] = "$hour:$min";
@@ -372,10 +365,8 @@ class Professor_admin_list_paginate_view_model
             'direction'
         );
         $query_list = array();
-        foreach($get_parameter as $key => $value)
-        {
-            if(!in_array($key, $blacklist))
-            {
+        foreach ($get_parameter as $key => $value) {
+            if (!in_array($key, $blacklist)) {
                 $query_list[] = "$key=$value";
             }
         }
@@ -383,105 +374,98 @@ class Professor_admin_list_paginate_view_model
     }
 
 
-	public function get_id ()
-	{
-		return $this->_id;
-	}
+    public function get_id()
+    {
+        return $this->_id;
+    }
 
-	public function set_id ($id)
-	{
-		$this->_id = $id;
-	}
+    public function set_id($id)
+    {
+        $this->_id = $id;
+    }
 
-	public $_id = NULL;
+    public $_id = NULL;
 
-	public function get_name ()
-	{
-		return $this->_name;
-	}
+    public function get_name()
+    {
+        return $this->_name;
+    }
 
-	public function set_name ($name)
-	{
-		$this->_name = $name;
-	}
+    public function set_name($name)
+    {
+        $this->_name = $name;
+    }
 
-	public $_name = NULL;
+    public $_name = NULL;
 
-	public function get_status ()
-	{
-		return $this->_status;
-	}
+    public function get_status()
+    {
+        return $this->_status;
+    }
 
-	public function set_status ($status)
-	{
-		$this->_status = $status;
-	}
+    public function set_status($status)
+    {
+        $this->_status = $status;
+    }
 
-	public $_status = NULL;
+    public $_status = NULL;
 
-	public function status_mapping ()
-	{
-		return $this->_entity->status_mapping();
+    public function status_mapping()
+    {
+        return $this->_entity->status_mapping();
+    }
 
-	}
+    public function to_json()
+    {
+        $list = $this->get_list();
 
-	public function to_json ()
-	{
-		$list = $this->get_list();
+        $clean_list = [];
 
-		$clean_list = [];
+        foreach ($list as $key => $value) {
+            $list[$key]->status = $this->status_mapping()[$value->status];
+            $clean_list_entry = [];
+            $clean_list_entry['id'] = $list[$key]->id;
+            $clean_list_entry['name'] = $list[$key]->name;
+            $clean_list_entry['status'] = $list[$key]->status;
+            $clean_list[] = $clean_list_entry;
+        }
 
-		foreach ($list as $key => $value)
-		{
-			$list[$key]->status = $this->status_mapping()[$value->status];
-			$clean_list_entry = [];
-			$clean_list_entry['id'] = $list[$key]->id;
-			$clean_list_entry['name'] = $list[$key]->name;
-			$clean_list_entry['status'] = $list[$key]->status;
-			$clean_list[] = $clean_list_entry;
-		}
+        return [
+            'page' => $this->get_page(),
+            'num_page' => $this->get_num_page(),
+            'num_item' => $this->get_total_rows(),
+            'item' => $clean_list
+        ];
+    }
 
-		return [
-			'page' => $this->get_page(),
-			'num_page' => $this->get_num_page(),
-			'num_item' => $this->get_total_rows(),
-			'item' => $clean_list
-		];
-	}
+    public function to_csv()
+    {
+        $list = $this->get_list();
 
-	public function to_csv ()
-	{
-		$list = $this->get_list();
+        $clean_list = [];
 
-		$clean_list = [];
+        foreach ($list as $key => $value) {
+            $list[$key]->status = $this->status_mapping()[$value->status];
+            $clean_list_entry = [];
+            $clean_list_entry['id'] = $list[$key]->id;
+            $clean_list_entry['name'] = $list[$key]->name;
+            $clean_list_entry['status'] = $list[$key]->status;
+            $clean_list[] = $clean_list_entry;
+        }
 
-		foreach ($list as $key => $value)
-		{
-			$list[$key]->status = $this->status_mapping()[$value->status];
-			$clean_list_entry = [];
-			$clean_list_entry['id'] = $list[$key]->id;
-			$clean_list_entry['name'] = $list[$key]->name;
-			$clean_list_entry['status'] = $list[$key]->status;
-			$clean_list[] = $clean_list_entry;
-		}
-
-		$columns = $this->get_column();
-		$columns = array_diff($columns,['Action']);
-		$csv = implode(",", $columns) . "\n";
-		$fields = array_filter($this->get_field_column());
-		foreach($clean_list as $row)
-		{
-			$row_csv = [];
-			foreach($row as $key =>$column)
-			{
-			if (in_array($key, $fields))
-			{
-				$row_csv[] = '"' . $column . '"';
-			}
-			}
-			$csv = $csv . implode(',', $row_csv) . "\n";
-		}
-		return $csv;
-}
-
+        $columns = $this->get_column();
+        $columns = array_diff($columns, ['Action']);
+        $csv = implode(",", $columns) . "\n";
+        $fields = array_filter($this->get_field_column());
+        foreach ($clean_list as $row) {
+            $row_csv = [];
+            foreach ($row as $key => $column) {
+                if (in_array($key, $fields)) {
+                    $row_csv[] = '"' . $column . '"';
+                }
+            }
+            $csv = $csv . implode(',', $row_csv) . "\n";
+        }
+        return $csv;
+    }
 }

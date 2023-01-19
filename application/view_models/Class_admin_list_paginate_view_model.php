@@ -19,7 +19,7 @@ class Class_admin_list_paginate_view_model
     protected $_page;
     protected $_num_links = 5;
     protected $_column = ['Action', 'ID', 'Name', 'Status'];
-    protected $_field_column = ['', 'id', 'name'];
+    protected $_field_column = ['', 'id', 'name', 'status'];
     protected $_list = [];
     protected $_links = '';
     protected $_sort_base_url = '';

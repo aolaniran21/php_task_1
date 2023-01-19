@@ -499,7 +499,7 @@ class Payout_admin_list_paginate_view_model
         }
 
         $columns = $this->get_column();
-        $columns = array_diff($columns, ['Action']);
+        $columns = array_diff($columns, ['Action', '']);
         $csv = implode(",", $columns) . "\n";
         $fields = array_filter($this->get_field_column());
 

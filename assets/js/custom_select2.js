@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function()
             } 
         }
     }); 
+    
     $(".get_years_select2").select2({
         minimumInputLength: 1, 
         ajax: {
